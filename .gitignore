@@ -1,0 +1,49 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# YOLO Model Weights (large files - download separately)
+*.pt
+
+# Video Files (too large for git)
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Generated Output Files
+tracking_output.csv
+*.csv
+
+# YOLO Runs/Output Directory
+runs/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDE Settings
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment Variables
+.env
+.env.local
