@@ -2,15 +2,31 @@
 venv/
 env/
 .venv/
+.python-version
 
 # YOLO Model Weights (large files - download separately)
 *.pt
+*.pth
+*.onnx
+*.engine
+*.trt
 
 # Video Files (too large for git)
 *.mp4
 *.avi
 *.mov
 *.mkv
+*.wmv
+*.flv
+*.webm
+
+# Image Files (for large datasets)
+# Uncomment if you don't want to track images
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.bmp
 
 # Generated Output Files
 tracking_output.csv
@@ -19,31 +35,69 @@ tracking_output.csv
 # YOLO Runs/Output Directory
 runs/
 
+# Extracted Frames Directory
+frames/
+
+# Dataset Directory (large training data)
+dataset/
+
 # Python Cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+*.pyo
+*.pyd
 
 # Distribution / Packaging
 build/
 dist/
 *.egg-info/
 *.egg
+*.whl
+pip-wheel-metadata/
 
 # IDE Settings
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+*.sublime-workspace
+*.sublime-project
 
 # OS Files
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 # Jupyter Notebook
 .ipynb_checkpoints/
+*.ipynb
 
 # Environment Variables
 .env
 .env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Coverage & Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# MyPy
+.mypy_cache/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

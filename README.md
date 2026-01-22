@@ -24,13 +24,20 @@ A Python-based vehicle detection and tracking system using **YOLOv8** object det
 YOLO/
 ├── extract_tracking_to_csv.py   # Main tracking script - processes video and exports data
 ├── analyze_tracking.py          # Analytics script - generates statistics and visualizations
-├── tracking_output.csv          # Generated tracking data (output)
-├── test_video_1.mp4             # Sample video file for testing
-├── yolov8m.pt                   # YOLOv8 Medium model weights
-├── yolov8n.pt                   # YOLOv8 Nano model weights
-├── runs/                        # YOLO output directory
-└── venv/                        # Python virtual environment
+├── extract_frame.py             # Utility script - extracts frames from video
+├── README.md                    # Project documentation
+├── .gitignore                   # Git ignore rules
+├── tracking_output.csv          # Generated tracking data (output) [gitignored]
+├── test_video_1.mp4             # Sample video file for testing [gitignored]
+├── yolov8m.pt                   # YOLOv8 Medium model weights [gitignored]
+├── yolov8n.pt                   # YOLOv8 Nano model weights [gitignored]
+├── runs/                        # YOLO output directory [gitignored]
+├── frames/                      # Extracted video frames [gitignored]
+├── dataset/                     # Training/testing dataset [gitignored]
+└── venv/                        # Python virtual environment [gitignored]
 ```
+
+> **Note:** Files marked with `[gitignored]` are excluded from version control due to their large size. You'll need to download model weights and provide your own video files.
 
 ---
 
