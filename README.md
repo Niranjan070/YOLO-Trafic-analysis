@@ -200,4 +200,4 @@ B.Tech AI & Data Science Student
 Interested in Computer Vision, Machine Learning & Real-world AI Systems
 
 🔗 GitHub: [github.com/Niranjan070](https://github.com/Niranjan070)  
-🔗 LinkedIn: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+🔗 LinkedIn: [linkedin.com/in/your-profile]([https://linkedin.com/in/your-profile](https://www.linkedin.com/in/niranjan-t-79a6b7320/))
