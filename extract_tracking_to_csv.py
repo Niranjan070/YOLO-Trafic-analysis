@@ -1,17 +1,18 @@
 from ultralytics import YOLO
 import pandas as pd
 
-# 1. Load YOLO model
-model = YOLO("yolov8m.pt")
+# Load YOUR custom trained model
+model = YOLO("runs/detect/train3/weights/best.pt")
 
-# 2. Run detection + tracking on video
 results = model.track(
-    source="test_video_1.mp4",   # change if filename is different
+    source="test_video_1.mp4",
     tracker="bytetrack.yaml",
     persist=True,
-    stream=True,
-    
+    stream=True
 )
+
+# rest of your code stays SAME
+
 
 # 3. Storage for extracted features
 data = []

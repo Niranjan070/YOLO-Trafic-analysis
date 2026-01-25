@@ -1,20 +1,35 @@
-# 🚗 Vehicle Tracking & Analytics System
+# 🚗 Traffic Vehicle Detection & Tracking System
 
-A Python-based vehicle detection and tracking system using **YOLOv8** object detection and **ByteTrack** multi-object tracking. This project processes video footage to detect, track, and analyze vehicle movement in real-time.
+A deep learning-based vehicle detection and tracking system built with **YOLOv8** trained on a **custom dataset** for traffic analysis. This project implements real-time multi-object tracking using **ByteTrack** to detect, track, and analyze vehicle movement from video footage.
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-00FFFF.svg)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Custom_Trained-00FFFF.svg)
+![Deep Learning](https://img.shields.io/badge/Deep_Learning-PyTorch-EE4C2C.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 ---
 
-## ✨ Features
+## 🎯 Project Highlights
 
-- **Real-time Object Detection**: Uses YOLOv8 for accurate vehicle and pedestrian detection
-- **Multi-Object Tracking**: ByteTrack algorithm for persistent object tracking across frames
-- **Comprehensive Data Export**: Exports tracking data to CSV for further analysis
-- **Traffic Analytics**: Generates vehicle count statistics by class and time intervals
-- **Visualization**: Creates bar charts showing vehicles per minute
+- **Custom-Trained Model**: YOLOv8 fine-tuned on a curated traffic dataset for improved accuracy on road vehicles
+- **5 Vehicle Classes**: Specialized detection for cars, trucks, buses, motorbikes, and bicycles
+- **Real-Time Tracking**: ByteTrack algorithm ensures persistent object tracking across video frames
+- **Traffic Analytics**: Automated statistics generation with vehicle counts, class distribution, and temporal analysis
+- **Data Export**: Comprehensive CSV output for further analysis and integration
+
+---
+
+## 🏷️ Custom Model Classes
+
+The model was trained to detect the following vehicle categories:
+
+| Class ID | Class Name | Description |
+|----------|------------|-------------|
+| 0 | 🚗 Car | Sedans, hatchbacks, SUVs, and similar passenger vehicles |
+| 1 | 🚛 Truck | Commercial trucks, pickups, and heavy goods vehicles |
+| 2 | 🚌 Bus | Public transport buses and coaches |
+| 3 | 🏍️ Motorbike | Motorcycles and scooters |
+| 4 | 🚲 Bicycle | Bicycles and e-bikes |
 
 ---
 
@@ -22,22 +37,31 @@ A Python-based vehicle detection and tracking system using **YOLOv8** object det
 
 ```
 YOLO/
-├── extract_tracking_to_csv.py   # Main tracking script - processes video and exports data
-├── analyze_tracking.py          # Analytics script - generates statistics and visualizations
-├── extract_frame.py             # Utility script - extracts frames from video
-├── README.md                    # Project documentation
-├── .gitignore                   # Git ignore rules
-├── tracking_output.csv          # Generated tracking data (output) [gitignored]
-├── test_video_1.mp4             # Sample video file for testing [gitignored]
-├── yolov8m.pt                   # YOLOv8 Medium model weights [gitignored]
-├── yolov8n.pt                   # YOLOv8 Nano model weights [gitignored]
-├── runs/                        # YOLO output directory [gitignored]
-├── frames/                      # Extracted video frames [gitignored]
-├── dataset/                     # Training/testing dataset [gitignored]
-└── venv/                        # Python virtual environment [gitignored]
+├── 📄 extract_tracking_to_csv.py   # Main script - video processing & tracking
+├── 📄 analyze_tracking.py          # Analytics - statistics & visualizations
+├── 📄 extract_frame.py             # Utility - frame extraction from video
+├── 📄 README.md                    # Project documentation
+├── 📄 .gitignore                   # Git ignore rules
+│
+├── 📁 runs/                        # Training outputs & model weights [gitignored]
+│   └── detect/
+│       └── train3/
+│           └── weights/
+│               └── best.pt         # ⭐ Custom trained model weights
+│
+├── 📁 dataset/                     # Custom training dataset [gitignored]
+│   ├── data.yaml                   # Dataset configuration
+│   └── images/
+│       ├── train/                  # Training images
+│       ├── val/                    # Validation images
+│       └── test/                   # Test images
+│
+├── 📁 frames/                      # Extracted video frames [gitignored]
+├── 📄 tracking_output.csv          # Generated tracking data [gitignored]
+└── 📁 venv/                        # Python virtual environment [gitignored]
 ```
 
-> **Note:** Files marked with `[gitignored]` are excluded from version control due to their large size. You'll need to download model weights and provide your own video files.
+> **Note:** Files marked with `[gitignored]` are excluded from version control due to their large size. See [Model Weights](#-model-weights) section for obtaining the trained model.
 
 ---
 
@@ -47,12 +71,17 @@ YOLO/
 
 - Python 3.8 or higher
 - pip (Python package manager)
+- CUDA-compatible GPU (recommended for training/fast inference)
 
 ### Installation
 
-1. **Clone/Download the project**
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/YOLO-Traffic-Analysis.git
+   cd YOLO-Traffic-Analysis
+   ```
 
-2. **Create and activate a virtual environment** (recommended):
+2. **Create and activate a virtual environment** (recommended)
    ```bash
    python -m venv venv
    
@@ -63,44 +92,87 @@ YOLO/
    source venv/bin/activate
    ```
 
-3. **Install required packages**:
+3. **Install dependencies**
    ```bash
    pip install ultralytics pandas matplotlib
    ```
+
+4. **Download/Add the trained model weights**
+   
+   Place the custom trained model at:
+   ```
+   runs/detect/train3/weights/best.pt
+   ```
+
+---
+
+## 🧠 Model Training
+
+### Dataset Configuration
+
+The model was trained using a custom dataset configured in `dataset/data.yaml`:
+
+```yaml
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: car
+  1: truck
+  2: bus
+  3: motorbike
+  4: bicycle
+```
+
+### Training Command
+
+To train your own model with a custom dataset:
+
+```bash
+yolo detect train data=dataset/data.yaml model=yolov8m.pt epochs=100 imgsz=640
+```
+
+### Training Parameters
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| Base Model | YOLOv8m | Medium-sized model for balanced speed/accuracy |
+| Image Size | 640×640 | Standard YOLO input resolution |
+| Classes | 5 | Traffic-specific vehicle categories |
 
 ---
 
 ## 📖 Usage
 
-### 1. Extract Tracking Data from Video
+### 1. Run Vehicle Detection & Tracking
 
-Run the extraction script to process your video file and generate tracking data:
+Process a video file to detect and track vehicles:
 
 ```bash
 python extract_tracking_to_csv.py
 ```
 
-**What it does:**
-- Loads the YOLOv8 model (`yolov8m.pt`)
-- Processes each frame of `test_video_1.mp4`
-- Applies ByteTrack for object tracking
-- Extracts features: frame number, track ID, class, confidence, bounding box coordinates
-- Saves results to `tracking_output.csv`
+**What this does:**
+- Loads the custom-trained YOLOv8 model (`runs/detect/train3/weights/best.pt`)
+- Processes each frame of the input video
+- Applies ByteTrack for multi-object tracking
+- Extracts: frame number, track ID, vehicle class, confidence, bounding box
+- Exports results to `tracking_output.csv`
 
-### 2. Analyze Tracking Data
+### 2. Analyze Traffic Data
 
-After extraction, run the analysis script:
+Generate statistics and visualizations from the tracking data:
 
 ```bash
 python analyze_tracking.py
 ```
 
-**What it does:**
+**What this does:**
 - Loads the CSV tracking data
-- Filters for vehicle classes (car, truck, bus, motorbike, bicycle)
-- Calculates unique vehicle counts
-- Groups data by class and time intervals
-- Generates a bar chart visualization of vehicles per minute
+- Calculates unique vehicle counts per class
+- Groups data by time intervals (per minute)
+- Generates a bar chart visualization
 
 ---
 
@@ -108,18 +180,28 @@ python analyze_tracking.py
 
 The `tracking_output.csv` contains the following columns:
 
-| Column | Description |
-|--------|-------------|
-| `frame` | Frame number in the video |
-| `track_id` | Unique tracking ID for each object |
-| `class` | Detected object class (car, person, truck, etc.) |
-| `confidence` | Detection confidence score (0-1) |
-| `x1`, `y1` | Top-left corner of bounding box |
-| `x2`, `y2` | Bottom-right corner of bounding box |
+| Column | Type | Description |
+|--------|------|-------------|
+| `frame` | int | Frame number in the video |
+| `track_id` | int | Unique tracking ID for each vehicle |
+| `class` | str | Vehicle class (car, truck, bus, motorbike, bicycle) |
+| `confidence` | float | Detection confidence score (0.0 - 1.0) |
+| `x1`, `y1` | float | Top-left corner of bounding box |
+| `x2`, `y2` | float | Bottom-right corner of bounding box |
+
+### Sample Output
+
+```csv
+frame,track_id,class,confidence,x1,y1,x2,y2
+1,1,car,0.92,120.5,200.3,280.1,350.7
+1,2,truck,0.88,450.2,180.6,620.4,380.2
+2,1,car,0.91,125.3,198.7,285.0,348.9
+...
+```
 
 ---
 
-## 📈 Sample Analytics Output
+## 📈 Sample Analytics
 
 ```
 Total rows: 6685
@@ -143,7 +225,7 @@ minute
 
 ## ⚙️ Configuration
 
-### Changing the Video Source
+### Changing the Input Video
 
 In `extract_tracking_to_csv.py`, modify the `source` parameter:
 
@@ -156,20 +238,24 @@ results = model.track(
 )
 ```
 
-### Using Different YOLO Models
+### Using a Different Model
 
-| Model | Size | Speed | Accuracy |
-|-------|------|-------|----------|
-| `yolov8n.pt` | Nano | Fastest | Lower |
-| `yolov8s.pt` | Small | Fast | Good |
-| `yolov8m.pt` | Medium | Balanced | Better |
-| `yolov8l.pt` | Large | Slower | High |
-| `yolov8x.pt` | XLarge | Slowest | Highest |
+To use a different model (e.g., after retraining):
 
-To change the model, modify:
 ```python
-model = YOLO("yolov8n.pt")  # Use nano for faster processing
+model = YOLO("runs/detect/train5/weights/best.pt")  # Update path
 ```
+
+---
+
+## 🎥 Supported Video Formats
+
+The system supports common video formats:
+- `.mp4` (recommended)
+- `.avi`
+- `.mov`
+- `.mkv`
+- `.webm`
 
 ---
 
@@ -177,27 +263,42 @@ model = YOLO("yolov8n.pt")  # Use nano for faster processing
 
 | Issue | Solution |
 |-------|----------|
-| `ModuleNotFoundError: No module named 'ultralytics'` | Run `pip install ultralytics` |
-| Slow processing | Use `yolov8n.pt` instead of `yolov8m.pt` |
-| Out of memory | Reduce video resolution or use smaller model |
-| No detections | Check video path and ensure good lighting conditions |
+| `ModuleNotFoundError: ultralytics` | Run `pip install ultralytics` |
+| Model file not found | Ensure `best.pt` is in `runs/detect/train3/weights/` |
+| Slow inference | Use GPU with CUDA support |
+| Out of memory | Reduce video resolution or batch size |
+| No detections | Check if video contains target vehicle classes |
 
 ---
 
-## 📚 Dependencies
+## 📚 Tech Stack
 
-- **[Ultralytics](https://github.com/ultralytics/ultralytics)** - YOLOv8 implementation
-- **[Pandas](https://pandas.pydata.org/)** - Data manipulation and analysis
-- **[Matplotlib](https://matplotlib.org/)** - Data visualization
+| Technology | Purpose |
+|------------|---------|
+| [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics) | Object detection framework |
+| [ByteTrack](https://github.com/ifzhang/ByteTrack) | Multi-object tracking algorithm |
+| [PyTorch](https://pytorch.org/) | Deep learning backend |
+| [Pandas](https://pandas.pydata.org/) | Data manipulation & analysis |
+| [Matplotlib](https://matplotlib.org/) | Data visualization |
+
+---
+
+## 🔮 Future Improvements
+
+- [ ] Add speed estimation for vehicles
+- [ ] Implement vehicle counting zones
+- [ ] Real-time video streaming support
+- [ ] Web dashboard for analytics visualization
+- [ ] License plate recognition integration
 
 ---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
+- 🐛 Report bugs
+- 💡 Suggest new features
+- 🔧 Submit pull requests
 
 ---
 
@@ -209,9 +310,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [Ultralytics](https://github.com/ultralytics/ultralytics) for the amazing YOLOv8 implementation
+- [Ultralytics](https://github.com/ultralytics/ultralytics) for the YOLOv8 framework
 - [ByteTrack](https://github.com/ifzhang/ByteTrack) for the multi-object tracking algorithm
+- Open-source traffic datasets for training data inspiration
 
 ---
 
-<p align="center">Made with ❤️ using YOLOv8</p>
+<p align="center">
+  <strong>Built with 🚀 YOLOv8 | Custom Trained for Traffic Analysis</strong>
+</p>
