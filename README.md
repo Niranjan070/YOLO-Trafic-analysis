@@ -1,4 +1,4 @@
-# � Traffic Analysis using YOLOv8 (Custom Training + Tracking + Analytics)
+#  Traffic Analysis using YOLOv8 (Custom Training + Tracking + Analytics)
 
 ## 📌 Overview
 
@@ -35,7 +35,7 @@ The goal was not just to detect objects, but to understand the full lifecycle of
 
 ---
 
-## �️ Tech Stack
+##  Tech Stack
 
 - Python
 - YOLOv8 (Ultralytics)
@@ -47,7 +47,7 @@ The goal was not just to detect objects, but to understand the full lifecycle of
 
 ---
 
-## � Project Structure
+##  Project Structure
 
 ```
 YOLO/
@@ -107,7 +107,7 @@ yolo predict model=runs/detect/train3/weights/best.pt source=test_video_1.mp4 sh
 
 ---
 
-## � Extract Tracking Data to CSV
+##  Extract Tracking Data to CSV
 
 ```bash
 python extract_tracking_to_csv.py
@@ -171,7 +171,7 @@ runs/detect/train3/weights/best.pt
 
 ---
 
-## � Future Improvements
+##  Future Improvements
 
 - [ ] Increase dataset size and diversity
 - [ ] Add data augmentation
@@ -193,7 +193,7 @@ The focus was on:
 
 ---
 
-## � Author
+##  Author
 
 **Niranjan T**  
 B.Tech AI & Data Science Student  
